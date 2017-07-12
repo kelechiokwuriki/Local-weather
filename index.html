@@ -1,0 +1,103 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <title>Weather Map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">    
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    
+    <body>
+        <div class="container-fluid text-center">
+            <div class="welcome">
+                <h2>FreeCodeCamp Intermediate Front-End Project</h2>
+                <h2>A Location Based Weather App</h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4 content">
+                    <img class="loading" src="35.gif"/><br/>
+                    <span id="location">Getting location... </span>
+                    
+                    <div class='row center-block text-center'>
+                        <span id="temperature"></span> <span id="unit">°C</span>
+                        <img id="icon" src="" />
+                    </div>
+                    
+                    <button id="convert" type="button" class="btn btn-primary">C/F</button>
+                    <div id="reload"></div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            //to do---------------
+            //check if there's internet connection
+            //if request fails, show an error text in red color
+            //replace the convert button with reload button
+            //the reload button should fire the getdata function
+            $(document).ready(function()
+            { 
+                var ipUrl = "https://ipinfo.io/json";
+                var isF = false;
+                
+                $('#convert').hide();
+                
+                function getData()
+                {
+                
+                    $.when($.ajax(ipUrl)).then(function(ipData, ipError, ipStatusCode)
+                    {
+                        
+                        console.log(ipStatusCode.status);
+                        console.log(ipError);
+                        console.log(ipData);
+                        
+                        
+                        $('#location').html(ipData.city + ', ' + ipData.country); 
+
+                        var weatherUrl = "http://api.apixu.com/v1/current.json?key=1f677e802c4e4d9dac3203455170306&q=" + ipData.loc;
+
+                       $.when($.ajax(weatherUrl)).then(function(weatherData)
+                       {
+                           $('#temperature').html(weatherData.current.temp_c).css("color", "red");
+
+                           $('#icon').attr("src", "http:"+ weatherData.current.condition.icon);
+
+                           $('.loading').remove();
+
+                           $('#convert').show().on("click", function()
+                           {
+                               if(isF == false)
+                               {
+                                   $('#temperature').html(weatherData.current.temp_f);
+                                   $('#unit').html(" F");
+                                   isF = true;
+                               }
+                               else
+                               {
+                                   $('#temperature').html(weatherData.current.temp_c);
+                                   $('#unit').html(" °C");
+                                   isF = false;                                       
+                               }
+
+                           });
+
+                       });
+
+                    });
+                 }     
+                
+                getData();
+            });  
+           
+        </script>
+    </body>
+</html>
+
+
+
+

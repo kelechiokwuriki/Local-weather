@@ -1,0 +1,30 @@
+body{
+    font: 20px "Montserrat", sans-serif;
+    background-color: #D9853B;
+    
+    font-size: 2.3em;
+}
+
+.content{ 
+    padding: 20px 0 20px 0;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+}
+
+.welcome{
+    margin-left: 15px;
+}
+
+.container{
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+#unit{
+    color: red;
+}
+
+#convert{
+    margin-top: 15px;
+}
