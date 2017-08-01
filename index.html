@@ -59,7 +59,7 @@
                         
                         $('#location').html(ipData.city + ', ' + ipData.country); 
 
-                        var weatherUrl = "http://api.apixu.com/v1/current.json?key=1f677e802c4e4d9dac3203455170306&q=" + ipData.loc;
+                        var weatherUrl = "https://api.apixu.com/v1/current.json?key=1f677e802c4e4d9dac3203455170306&q=" + ipData.loc;
 
                        $.when($.ajax(weatherUrl)).then(function(weatherData)
                        {
